@@ -1,0 +1,31 @@
+Generator:
+  encoder:
+    name: LSTM_Block
+    args: 
+      feature_dim: 14
+      n_hidden: 32
+      output_dim: 128
+      Q: 3     
+  decoder:
+    name: LSTM
+    args:
+      feature_dim: 256
+      n_hidden: 32
+      n_layers: 1
+      bidirectional: False
+      transposed: True
+Discriminator:
+  encoder_x:
+    name: LSTM_Block
+    args: 
+      feature_dim: 14
+      n_hidden: 32
+      output_dim: 128
+      Q: 3     
+  encoder_y:
+    name: LSTM_Block
+    args: 
+      feature_dim: 2
+      n_hidden: 32
+      output_dim: 128
+      Q: 3     

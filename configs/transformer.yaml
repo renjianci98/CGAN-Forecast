@@ -1,0 +1,38 @@
+Generator:
+  encoder:
+    name: Trans_Encoder
+    args: 
+      d_model: 128
+      n_head: 8
+      n_layers: 6
+      d_forward: 512
+  decoder:
+    name: Trans_Decoder
+    args:
+        d_model: 128
+        n_head: 8
+        n_layers: 6
+        d_forward: 512
+  embedding:
+    args:
+        input_dim: 14
+        embed_dim: 128
+  predict_len: 4 
+Discriminator:
+  encoder_x:
+    name: Trans_Encoder
+    args:
+      d_model:
+      n_head: 
+      n_layers: 
+      d_forward:
+  encoder_y:
+    name: Trans_Encoder
+    args:
+      d_model:
+      n_head: 
+      n_layers: 
+      d_forward:
+  embedding:
+    embed_dim: 128
+  predict_len: 4 
