@@ -37,13 +37,18 @@ if __name__ == "__main__":
     num_workers = 4
     os.environ["CUDA_VISIBLE_DEVICES"] = ','.join(str(x) for x in train_gpu)
     ngpus_per_node = len(train_gpu)
+    model_configs_path='configs/LSTM.yaml'
+    dataset_configs_path='configs/dataset.yaml'
     train_path = 'data/train.txt'
     val_path = 'data/val.txt'
     print('Number of devices: {}'.format(ngpus_per_node))
-
-    with open('configs/LSTM.yaml','r',encoding='utf-8') as f:
-        configs=yaml.load(f,Loader=yaml.FullLoader)
-
+    '''
+    读取模型和数据集的设置文件
+    '''
+    with open(model_configs_path,'r',encoding='utf-8') as f:
+        model_configs=yaml.load(f,Loader=yaml.FullLoader)
+    with open(dataset_configs_path,'r',encoding='utf-8') as f:
+        dataset_configs=yaml.load(f,Loader=yaml.FullLoader)
     '''
     保存log以及权重的路径初始化
     '''
@@ -55,8 +60,8 @@ if __name__ == "__main__":
     '''
     根据配置生成模型
     '''
-    G = models.make('Generator_LSTM',**configs['Generator']).train()
-    D = models.make('Discriminator_LSTM',**configs['Discriminator']).train()
+    G = models.make('Generator_LSTM',**model_configs['Generator']).train()
+    D = models.make('Discriminator_LSTM',**model_configs['Discriminator']).train()
     G = torch.nn.DataParallel(G)
     D = torch.nn.DataParallel(D)
     cudnn.benchmark = True
@@ -66,8 +71,9 @@ if __name__ == "__main__":
     '''
     准备数据
     '''
-    train_dataset = ForecastDataset(train_path)
-    val_dataset = ForecastDataset(val_path)
+    dataset_name=dataset_configs['name']
+    train_dataset = ForecastDataset(dataset_configs,f'data/{dataset_name}/train.txt')
+    val_dataset = ForecastDataset(dataset_configs,f'data/{dataset_name}/val.txt')
     num_train = len(train_dataset)
     num_val = len(val_dataset)
     epoch_step = num_train // batch_size

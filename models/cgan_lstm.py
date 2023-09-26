@@ -54,7 +54,7 @@ class Discriminator(nn.Module):
         self.encoder_y = models.make(encoder_y['name'], **encoder_y['args'])
         self.fcblock1 = models.make('FC_Block', input_dim=128, K=3, M=128)
         self.fcblock2 = models.make('FC_Block', input_dim=256, K=3, M=256)
-        self.linear = nn.Linear(256, 1)
+        self.fc = nn.Linear(256, 1)
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, X, Y):
@@ -68,6 +68,6 @@ class Discriminator(nn.Module):
         Y = self.encoder_y(Y)
         X = torch.concat((X, Y), dim=1)
         X = self.fcblock2(X)
-        X = self.linear(X)
+        X = self.fc(X)
         score = self.sigmoid(X)
         return score

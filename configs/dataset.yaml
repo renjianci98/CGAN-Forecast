@@ -1,7 +1,6 @@
-dataset:
-  name: india_windspeed
-  path: data/india_windspeed.csv
-  total_len: 35040
-  history_len: 48
-  predict_len: 4
-  attribute_start: 5
+name: india_windspeed
+path: data/india_windspeed.csv
+total_len: 35040
+history_len: 48
+predict_len: 4
+attribute_start: 5
