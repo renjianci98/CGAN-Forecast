@@ -21,16 +21,16 @@ speed_result_list=[]
 speed_gt_list=[]
 with torch.no_grad():
     for i in range(500):
-        history_data,forecast_gt=test_dataset[i]
+        history_data,predict_gt=test_dataset[i]
         history_data=history_data.unsqueeze(0)
         noise=torch.rand((1,128),device='cuda')
-        forecast_result=G(history_data,noise)
-        forecast_result=forecast_result.squeeze(0)
-        speed_result=forecast_result[:,1].tolist()
-        speed_gt=forecast_gt[:,1].tolist()
+        predict_result=G(history_data,noise)
+        predict_result=predict_result.squeeze(0)
+        speed_result=predict_result[:,1].tolist()
+        speed_gt=predict_gt[:,1].tolist()
         speed_result_list.extend(speed_result)
         speed_gt_list.extend(speed_gt)
-        total_mse+=mse_loss(forecast_result,forecast_gt)
+        total_mse+=mse_loss(predict_result,predict_gt)
 mse=total_mse/len(test_dataset)
 plt.figure(figsize=(20,8))
 plt.plot(speed_gt_list,color='blue')

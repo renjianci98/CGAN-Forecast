@@ -22,24 +22,24 @@ class ForecastDataset(Dataset):
         转换为数据中的index
         '''
         index=self.index_ls[index]
-        history_data = self.df.iloc[index:index+48, 5:]
-        forecast_gt = self.df.iloc[index+48:index+52, [11,15]]
-        history_data = torch.tensor(history_data.values, dtype=torch.float)
-        forecast_gt = torch.tensor(forecast_gt.values, dtype=torch.float)
+        history = self.df.iloc[index:index+48, 5:]
+        predict_gt = self.df.iloc[index+48:index+52, [11,15]]
+        history = torch.tensor(history.values, dtype=torch.float)
+        predict_gt = torch.tensor(predict_gt.values, dtype=torch.float)
         if self.test:
-            history_data = history_data.cuda()
-            forecast_gt = forecast_gt.cuda()
-        return history_data, forecast_gt
+            history = history.cuda()
+            predict_gt = predict_gt.cuda()
+        return history, predict_gt
     
 def forecast_dataset_collate(batch):
     '''
     DataLoader中collate_fn使用
     '''
-    history_datas = []
-    forecast_gt = []
-    for hd, fg in batch:
-        history_datas.append(hd)
-        forecast_gt.append(fg)
-    history_datas = torch.stack(history_datas, dim=0)
-    forecast_gt = torch.stack(forecast_gt, dim=0)
-    return history_datas, forecast_gt
+    histories = []
+    predict_gts = []
+    for h, pg in batch:
+        histories.append(h)
+        predict_gts.append(pg)
+    histories = torch.stack(histories, dim=0)
+    predict_gts = torch.stack(predict_gts, dim=0)
+    return histories, predict_gts
