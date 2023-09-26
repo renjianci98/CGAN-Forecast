@@ -1,0 +1,5 @@
+/checkpoints/
+/data/
+/clear_checkpoints.sh
+/clear_results.sh
+/debug.py
