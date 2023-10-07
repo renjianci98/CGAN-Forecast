@@ -8,7 +8,7 @@ from matplotlib import pyplot as plt
 from tqdm import tqdm
 import math
 import random
-weight_path='checkpoints/weight/2023_09_23_22_41_50/final.pth'
+weight_path='checkpoints/weight/2023_09_26_16_50_28/ep620-loss0.401-val_loss0.402.pth'
 model_configs_path='configs/LSTM.yaml'
 dataset_configs_path='configs/dataset.yaml'
 with open(model_configs_path,'r',encoding='utf-8') as f:
